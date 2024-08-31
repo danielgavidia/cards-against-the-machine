@@ -26,8 +26,8 @@ export const getBlackCards = async (): Promise<string> => {
 };
 
 // Function to fetch white cards and transform the data
-export const getWhiteCards = async (): Promise<string[]> => {
-    const url = `${BASE_URL}/get_white_cards`;
+export const getWhiteCards = async (rating: string): Promise<string[]> => {
+    const url = `${BASE_URL}/get_white_cards/${rating}`;
     try {
         const response = await axios.get<IGetWhiteCardsResponse>(url);
         const dataObject = response.data.Data;
@@ -37,7 +37,7 @@ export const getWhiteCards = async (): Promise<string[]> => {
             (card) => card.trim() !== ""
         );
 
-        return whiteCardsArray;
+        return whiteCardsArray.slice(0, 6);
     } catch (error) {
         // Handle errors here
         console.error("Error fetching data:", error);

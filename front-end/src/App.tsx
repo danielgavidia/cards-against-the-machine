@@ -7,46 +7,40 @@ import { useState, useEffect } from "react";
 
 import { getBlackCards, getWhiteCards } from "./utils/getData";
 
-// const arrayToTen = Array.from({ length: 6 }, (_, index) => index);
-
 const App = () => {
-    // const cardArr = arrayToTen.map((x) => ({
-    //     id: x,
-    //     answer: `This is answer ${x}`,
-    // }));
-
     const [promptStr, setPromptStr] = useState<string | null>(null);
     const [cardArr, setCardArr] = useState<string[] | undefined>(undefined);
+    const [rating, setRating] = useState<string>("kids");
 
+    console.log(`rating: ${rating}`);
+
+    const handleSetRating = (newRating: string) => {
+        setRating(newRating);
+    };
+
+    // Function to fetch both black card and white cards
+    const fetchCards = async () => {
+        try {
+            const blackCard = await getBlackCards();
+            setPromptStr(blackCard); // Assuming getBlackCards() returns a string
+
+            const cards = await getWhiteCards(rating);
+            setCardArr(cards); // Assuming getWhiteCards() returns string[]
+        } catch (error) {
+            console.error("Error fetching cards:", error);
+        }
+    };
+
+    // Initial fetch on component mount
     useEffect(() => {
-        const fetchBlackCard = async () => {
-            try {
-                const blackCard = await getBlackCards();
-                setPromptStr(blackCard); // Adjust based on your actual response structure
-            } catch (error) {
-                console.error("Error fetching black card:", error);
-            }
-        };
-
-        fetchBlackCard();
-    }, []);
-
-    useEffect(() => {
-        const fetchWhiteCards = async () => {
-            try {
-                const cards = await getWhiteCards();
-                setCardArr(cards); // Adjust based on your actual response structure
-            } catch (error) {
-                console.error("Error fetching white cards:", error);
-            }
-        };
-
-        fetchWhiteCards();
-    }, []);
+        fetchCards();
+    }, [rating]);
 
     return (
         <div className="app">
-            <Navbar />
+            <Navbar rating={rating} handleSetRating={handleSetRating} />
+            <button onClick={fetchCards}>Refresh</button>{" "}
+            {/* Button to trigger refresh */}
             {promptStr !== null &&
                 cardArr && ( // Ensure cardArr is not undefined before rendering Dashboard
                     <Dashboard cardArray={cardArr} promptStr={promptStr} />
