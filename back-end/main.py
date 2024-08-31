@@ -48,7 +48,6 @@ def read_root():
 @app.get("/get_black_card")
 def read_root():
     blackText = generate_black_card()
-    whiteArray = generate_white_card()
     return {"Data": {"Black Card": blackText}}
 
 @app.get("/get_white_cards")
