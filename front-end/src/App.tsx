@@ -5,17 +5,18 @@ import Dashboard from "./components/Dashboard";
 
 import { useState, useEffect } from "react";
 
-import { getBlackCards } from "./utils/getData";
+import { getBlackCards, getWhiteCards } from "./utils/getData";
 
-const arrayToTen = Array.from({ length: 6 }, (_, index) => index);
+// const arrayToTen = Array.from({ length: 6 }, (_, index) => index);
 
 const App = () => {
-    const cardArr = arrayToTen.map((x) => ({
-        id: x,
-        answer: `This is answer ${x}`,
-    }));
+    // const cardArr = arrayToTen.map((x) => ({
+    //     id: x,
+    //     answer: `This is answer ${x}`,
+    // }));
 
     const [promptStr, setPromptStr] = useState<string | null>(null);
+    const [cardArr, setCardArr] = useState<string[] | undefined>(undefined);
 
     useEffect(() => {
         const fetchBlackCard = async () => {
@@ -30,12 +31,26 @@ const App = () => {
         fetchBlackCard();
     }, []);
 
+    useEffect(() => {
+        const fetchWhiteCards = async () => {
+            try {
+                const cards = await getWhiteCards();
+                setCardArr(cards); // Adjust based on your actual response structure
+            } catch (error) {
+                console.error("Error fetching white cards:", error);
+            }
+        };
+
+        fetchWhiteCards();
+    }, []);
+
     return (
         <div className="app">
             <Navbar />
-            {promptStr !== null && (
-                <Dashboard cardArray={cardArr} promptStr={promptStr} />
-            )}
+            {promptStr !== null &&
+                cardArr && ( // Ensure cardArr is not undefined before rendering Dashboard
+                    <Dashboard cardArray={cardArr} promptStr={promptStr} />
+                )}
         </div>
     );
 };

@@ -7,8 +7,8 @@ interface IGetBlackCard {
     Data: { BlackCard: string };
 }
 
-interface IGetWhiteCards {
-    Data: Array<Object>;
+interface IGetWhiteCardsResponse {
+    Data: { [key: string]: string };
 }
 
 // Function to fetch data
@@ -25,11 +25,19 @@ export const getBlackCards = async (): Promise<string> => {
     }
 };
 
-export const getWhiteCards = async (): Promise<IGetWhiteCards[]> => {
+// Function to fetch white cards and transform the data
+export const getWhiteCards = async (): Promise<string[]> => {
     const url = `${BASE_URL}/get_white_cards`;
     try {
-        const response = await axios.get<IGetWhiteCards[]>(url);
-        return response.data;
+        const response = await axios.get<IGetWhiteCardsResponse>(url);
+        const dataObject = response.data.Data;
+
+        // Convert the object to an array of strings
+        const whiteCardsArray = Object.values(dataObject).filter(
+            (card) => card.trim() !== ""
+        );
+
+        return whiteCardsArray;
     } catch (error) {
         // Handle errors here
         console.error("Error fetching data:", error);
