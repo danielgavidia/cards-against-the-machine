@@ -3,6 +3,8 @@ import "./styles/app.css";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 
+import { getBlackCards, getWhiteCards } from "./utils/getData";
+
 const arrayToTen = Array.from({ length: 6 }, (_, index) => index);
 
 const App = () => {
