@@ -9,7 +9,10 @@ def generate_black_card():
     black = model.generate_content(
         "given the game cards against humanity, generate 1 prompt"
     ).text
-    return black.split("**")[1]
+    blackParsed = black.split("**")
+    text = blackParsed if len(blackParsed) <= 1 else blackParsed[1]
+
+    return text
 
 
 def generate_white_cards():
