@@ -3,7 +3,7 @@ import axios from "axios";
 // Define the base URL of your API
 const BASE_URL = "https://cards-against-the-machine-back-end.onrender.com";
 
-interface IGetBlackCards {
+interface IGetBlackCard {
     Data: { BlackCard: string };
 }
 
@@ -12,11 +12,12 @@ interface IGetWhiteCards {
 }
 
 // Function to fetch data
-export const getBlackCards = async (): Promise<IGetBlackCards[]> => {
-    const url = `${BASE_URL}/get_black_cards`;
+export const getBlackCards = async (): Promise<string> => {
+    const url = `${BASE_URL}/get_black_card`;
     try {
-        const response = await axios.get<IGetBlackCards[]>(url);
-        return response.data;
+        const response = await axios.get<IGetBlackCard>(url);
+        console.log(response.data.Data.BlackCard);
+        return response.data.Data.BlackCard;
     } catch (error) {
         // Handle errors here
         console.error("Error fetching data:", error);

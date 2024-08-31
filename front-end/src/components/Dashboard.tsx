@@ -9,13 +9,14 @@ interface CardItem {
 
 interface DashboardProps {
     cardArray: CardItem[];
+    promptStr: string | null;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ cardArray }) => {
+const Dashboard: React.FC<DashboardProps> = ({ cardArray, promptStr }) => {
     return (
         <div className="dashboard">
             <div className="prompt-container">
-                <Prompt prompt="This is a test prompt" />
+                <Prompt prompt={promptStr || ""} />
             </div>
             <div className="cards-container">
                 {cardArray.map((x) => (

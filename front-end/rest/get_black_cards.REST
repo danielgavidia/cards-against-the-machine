@@ -1,1 +1,0 @@
-GET https://cards-against-the-machine-back-end.onrender.com/get_black_cards
