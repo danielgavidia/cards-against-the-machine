@@ -15,7 +15,7 @@ def generate_black_card():
     return text
 
 
-def generate_white_cards():
+def generate_white_cards(text):
     model = genai.GenerativeModel("gemini-1.5-flash")
     white = model.generate_content(
         "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card, no BLANK"
@@ -66,9 +66,16 @@ def read_root3():
     blackText = generate_black_card()
     return {"Data": {"BlackCard": blackText}}
 
-@app.get("/get_white_cards")
+@app.get("/get_white_cards/adult")
 def read_root4():
-    return {"Data": generate_white_cards()}
+    text = "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card, complete statements only"
+
+    return {"Data": generate_white_cards(text)}
+
+@app.get("/get_white_cards/kids")
+def read_root4():
+    text = "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card, complete statements only, kids friendly"
+    return {"Data": generate_white_cards(text)}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: str = None):
