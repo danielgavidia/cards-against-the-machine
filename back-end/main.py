@@ -17,8 +17,14 @@ def generate_black_card():
 
 def generate_white_cards(input_text):
     model = genai.GenerativeModel("gemini-1.5-flash")
-    white = model.generate_content(input_text).text
-    whiteCards = white.split("**")
+    try_again = 5
+    while try_again > 0:
+        white = model.generate_content(input_text).text
+        whiteCards = white.split("**")
+        if len(whiteCards) == 13:
+            try_again = 0
+        else:
+            try_again -=1
     cardDict ={}
     count =1
     for i in range(1,len(whiteCards),2):
