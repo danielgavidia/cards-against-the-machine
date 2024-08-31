@@ -21,10 +21,14 @@ const App = () => {
     // Function to fetch both black card and white cards
     const fetchCards = async () => {
         try {
-            const blackCard = await getBlackCards();
-            setPromptStr(blackCard); // Assuming getBlackCards() returns a string
+            // Fetch both data simultaneously
+            const [blackCard, cards] = await Promise.all([
+                getBlackCards(),
+                getWhiteCards(rating),
+            ]);
 
-            const cards = await getWhiteCards(rating);
+            // Update state after both fetches are complete
+            setPromptStr(blackCard); // Assuming getBlackCards() returns a string
             setCardArr(cards); // Assuming getWhiteCards() returns string[]
         } catch (error) {
             console.error("Error fetching cards:", error);
