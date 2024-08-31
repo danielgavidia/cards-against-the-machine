@@ -20,10 +20,14 @@ def generate_white_cards():
     white = model.generate_content(
         "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card"
     ).text
-    whiteCards = white.split("**")[1:]
-    for card in whiteCards:
-        card = re.sub(r"\d\.\s+", "", card)
-    return whiteCards
+    whiteCards = white.split("**")
+    cardDict ={}
+    count =1
+    for i in range(1,len(whiteCards),2):
+        card = re.sub(r"\d\.\s+", "", whiteCards[i])
+        cardDict[str(count)]=card
+        count+=1
+    return cardDict
 
 #-get 6 prompts. 
 #how to recieve body 
@@ -64,12 +68,7 @@ def read_root3():
 
 @app.get("/get_white_cards")
 def read_root4():
-    whiteArray = generate_white_cards()
-    count = len(whiteArray)
-    cards = {}
-    for i in range(count):
-        cards[str(i)] = whiteArray[i]
-    return {"Data": cards}
+    return {"Data": generate_white_cards()}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: str = None):
