@@ -23,6 +23,14 @@ def generate_white_cards():
         card = re.sub(r"\d\.\s+", "", card)
     return whiteCards
 
+#-get 6 prompts. 
+#how to recieve body 
+#-out of these 6 prompts, return the funniest card 
+#-store this into a 
+#-give point to the person who the card came from  
+#-keep track of points 
+
+
 
 from fastapi import FastAPI
 
@@ -38,6 +46,20 @@ def read_root():
 def read_root():
     return {"Data": {"response1": "jdjkdajkfda", "response2": "adfjadfjadkjf"}}
 
+@app.get("/get_black_card")
+def read_root():
+    blackText = generate_black_card()
+    whiteArray = generate_white_card()
+    return {"Data": {"Black Card": blackText}}
+
+@app.get("/get_white_cards")
+def read_root():
+    whiteArray = generate_white_card()
+    count = len(whiteArray)
+    cards = {}
+    for i in range(count):
+        cards[i] = whiteArray[i]
+    return {"Data": cards}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: str = None):
