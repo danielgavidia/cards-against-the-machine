@@ -67,7 +67,7 @@ def read_root3():
 @app.get("/get_white_cards/{rating}")
 def read_root4(rating):
     text = "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card, complete statements only, no colon"
-    if rating = "kids":
+    if rating == "kids":
         text += " , kids friendly"
     return {"Data": generate_white_cards(text)}
 
