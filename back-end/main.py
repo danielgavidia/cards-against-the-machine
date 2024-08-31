@@ -37,22 +37,21 @@ app = FastAPI()
 
 
 @app.get("/")
-def read_root():
+def read_root1():
     return {"Hello": "World"}
 
 
 @app.get("/get_data_answers")
-def read_root():
+def read_root2():
     return {"Data": {"response1": "jdjkdajkfda", "response2": "adfjadfjadkjf"}}
 
 @app.get("/get_black_card")
-def read_root():
+def read_root3():
     blackText = generate_black_card()
-    whiteArray = generate_white_card()
-    return {"Data": {"Black Card": blackText}}
+    return {"Data": {"BlackCard": blackText}}
 
 @app.get("/get_white_cards")
-def read_root():
+def read_root4():
     whiteArray = generate_white_card()
     count = len(whiteArray)
     cards = {}
