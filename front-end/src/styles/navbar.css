@@ -5,4 +5,35 @@
     align-items: center;
     padding: 0 20px;
     font-size: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-title {
+    font-weight: bold;
+}
+
+.navbar-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar-buttons button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-buttons button:hover {
+    background-color: #777;
+}
+
+.navbar-buttons button.activated {
+    background-color: lightcoral; /* Change to your desired active color */
+    color: white; /* Ensure text color contrasts with the background */
+    font-weight: bold; /* Optionally make the text bold */
 }
