@@ -18,7 +18,7 @@ def generate_black_card():
 def generate_white_cards():
     model = genai.GenerativeModel("gemini-1.5-flash")
     white = model.generate_content(
-        "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card"
+        "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card, no BLANK"
     ).text
     whiteCards = white.split("**")
     cardDict ={}
