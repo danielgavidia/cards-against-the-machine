@@ -3,11 +3,26 @@ import re
 
 genai.configure(api_key="AIzaSyAGty07lpzqAW8gM21DZG17_g1ppw0RlE8")
 
+# Paths to your white and black cards files
+white_cards_file_path = 'back-end/white_cards.txt'
+black_cards_file_path = 'back-end/black_cards.txt'
+
+# Function to read the content of the white and black cards files
+def read_cards(file_path):
+    with open(file_path, 'r') as file:
+        return file.read()
+
+# Read the content of white and black cards
+existing_white_cards = read_cards(white_cards_file_path)
+existing_black_cards = read_cards(black_cards_file_path)
+
 
 def generate_black_card():
     model = genai.GenerativeModel("gemini-1.5-flash")
     black = model.generate_content(
-        "given the game cards against humanity, generate 1 prompt"
+         f"Here are some existing black cards from the game Cards Against Humanity:\n"
+        f"{existing_black_cards}\n\n"
+        f"Given this, generate 1 new black card in a similar style."
     ).text
     blackParsed = black.split("**")
     text = blackParsed if len(blackParsed) <= 1 else blackParsed[1]
@@ -18,7 +33,9 @@ def generate_black_card():
 def generate_white_cards():
     model = genai.GenerativeModel("gemini-1.5-flash")
     white = model.generate_content(
-        "given the game cards against humanity, generate 6 new white cards in that style, max 3 words each card"
+        f"Here are some existing white cards from the game Cards Against Humanity:\n"
+        f"{existing_white_cards}\n\n"
+        f"Given this, generate 6 new white cards in a similar style, max 3 words each card."
     ).text
     whiteCards = white.split("**")[1:]
     for card in whiteCards:
