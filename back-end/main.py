@@ -52,7 +52,7 @@ def read_root3():
 
 @app.get("/get_white_cards")
 def read_root4():
-    whiteArray = generate_white_card()
+    whiteArray = generate_white_cards()
     count = len(whiteArray)
     cards = {}
     for i in range(count):
