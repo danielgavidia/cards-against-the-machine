@@ -35,6 +35,14 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update this to the origins you want to allow
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 
 @app.get("/")
 def read_root1():
@@ -52,11 +60,11 @@ def read_root3():
 
 @app.get("/get_white_cards")
 def read_root4():
-    whiteArray = generate_white_card()
+    whiteArray = generate_white_cards()
     count = len(whiteArray)
     cards = {}
     for i in range(count):
-        cards[i] = whiteArray[i]
+        cards[str(i)] = whiteArray[i]
     return {"Data": cards}
 
 @app.get("/items/{item_id}")
